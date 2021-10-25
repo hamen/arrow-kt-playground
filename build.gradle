@@ -1,25 +1,38 @@
-plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+buildscript {
+    def arrow_meta = '1.5.0-SNAPSHOT'
+    repositories {
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+    dependencies {
+        classpath "io.arrow-kt:arrow-refined-types-gradle-plugin:$arrow_meta"
+    }
 }
 
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.5.0'
+}
+apply plugin: "io.arrow-kt.refined-types"
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
 apply plugin: 'kotlin-kapt'
 
 group 'com.ivanmorgillo'
 version '1.0-SNAPSHOT'
+def arrow_version = '1.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    jcenter()
-    maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
-    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' } // for SNAPSHOT builds
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
-def arrow_version = "0.11.0"
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    implementation "io.arrow-kt:arrow-optics:$arrow_version"
-    implementation "io.arrow-kt:arrow-fx-coroutines:$arrow_version"
-    implementation "io.arrow-kt:arrow-generic:$arrow_version"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.0'
 
+    implementation "io.arrow-kt:arrow-core:$arrow_version"
+    implementation "io.arrow-kt:arrow-fx-coroutines:$arrow_version"
+    implementation "io.arrow-kt:arrow-fx-stm:$arrow_version"
+    implementation "io.arrow-kt:arrow-optics:$arrow_version"
     kapt "io.arrow-kt:arrow-meta:$arrow_version"
 }
