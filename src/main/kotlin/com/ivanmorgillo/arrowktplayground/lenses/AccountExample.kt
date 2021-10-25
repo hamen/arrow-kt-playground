@@ -1,4 +1,4 @@
-package lenses
+package com.ivanmorgillo.arrowktplayground.lenses
 
 import arrow.optics.optics
 

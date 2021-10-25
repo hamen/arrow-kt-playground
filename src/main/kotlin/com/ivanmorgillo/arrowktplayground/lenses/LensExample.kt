@@ -1,4 +1,4 @@
-package lenses
+package com.ivanmorgillo.arrowktplayground.lenses
 
 fun main() {
 
